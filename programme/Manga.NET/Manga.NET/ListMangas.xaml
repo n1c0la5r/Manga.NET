@@ -1,0 +1,31 @@
+﻿<Page
+    x:Class="MangaNET.ListeMangas"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MangaNET"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer>
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <AutoSuggestBox Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="350" Margin="20"
+                       PlaceholderText="Recherche" QueryIcon="Find"
+                       QuerySubmitted="AutoSuggestBox_QuerySubmitted" TextChanged="AutoSuggestBox_TextChanged"/>
+
+            <GridView Grid.Row="1" HorizontalAlignment="Center" ItemContainerStyle="{StaticResource WrapGrid}" 
+                      ItemsSource="{x:Bind Mode=OneWay, Path=search, Converter={StaticResource LId2LMangaConverter}}" 
+                      ItemTemplate="{StaticResource MangaThumbnailTemplate}" ItemClick="GridView_ItemClick"/>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind ToMany, Mode=OneWay}">
+                <TextBlock HorizontalTextAlignment="Center" x:Name="ResultText"/>
+                <TextBlock HorizontalTextAlignment="Center" FontSize="50">😢</TextBlock>
+            </StackPanel>
+
+        </Grid>
+    </ScrollViewer>
+</Page>

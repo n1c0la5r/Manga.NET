@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="MangaNET.Home"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MangaNET"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
+
+    <ScrollViewer>
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock Style="{StaticResource Titre}" Grid.Row="0">A lire</TextBlock>
+
+            <GridView Grid.Row="1"  HorizontalAlignment="Center" ItemContainerStyle="{StaticResource WrapGrid}" IsItemClickEnabled="True"
+                      ItemsSource="{x:Bind ToRead, Mode=OneWay, Converter={StaticResource DictToRead2dictMangaToRead}}"
+                      ItemTemplate="{StaticResource ToReadTemplate}" ItemClick="GridView_ItemClick"/>
+            
+        </Grid>
+    </ScrollViewer>
+    
+</Page> 

@@ -1,0 +1,118 @@
+﻿<Page
+    x:Class="MangaNET.MangaDetail"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MangaNET"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
+    <Page.Resources>
+        <Style x:Key="MangaTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+        <Style x:Key="SmallTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="BookmarkButton">
+            <Setter Property="Background" Value="{ThemeResource SystemControlAcrylicElementBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" CornerRadius="5 0 5 0" Background="{TemplateBinding Background}">
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+
+                                    <VisualState x:Name="PointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.(RevealBrush.State)" Value="PointerOver" />
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" />
+                                        </VisualState.Setters>
+
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+
+                                    <VisualState x:Name="Pressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.(RevealBrush.State)" Value="Pressed" />
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" />
+                                        </VisualState.Setters>
+
+                                        <Storyboard>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter x:Name="ContentPresenter"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Content="{TemplateBinding Content}"
+                                ContentTransitions="{TemplateBinding ContentTransitions}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Padding="{TemplateBinding Padding}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                AutomationProperties.AccessibilityView="Raw" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <ScrollViewer>
+            <StackPanel>
+                <Grid Grid.Row="0" Margin="50 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="10" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <Image Source="{x:Bind CurrentManga.ImageUrl, Mode=OneWay}" ImageFailed="Image_ImageFailed"/>
+                    </Border>
+                    <Button Style="{StaticResource BookmarkButton}" Click="Button_Click">
+                        <SymbolIcon Symbol="OutlineStar" Margin="5"/>
+                    </Button>
+                    <StackPanel Grid.Column="1" Margin="30 0">
+                        <TextBlock Text="{x:Bind CurrentManga.Title, Mode=OneWay}" Style="{StaticResource MangaTitle}"/>
+                        <TextBlock TextWrapping="Wrap" Text="{x:Bind CurrentManga.Categories, Converter={StaticResource Categories2StringConverter}, Mode=OneWay}"/>
+                        <TextBlock Text="Synopis :" Style="{StaticResource SmallTitle}"/>
+                        <TextBlock TextWrapping="Wrap" Text="{x:Bind CurrentManga.Synopsis, Mode=OneWay}"/>
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock Grid.Row="1" Text="Chapitres :" Style="{StaticResource SmallTitle}" Margin="75 10 0 0"/>
+
+                <GridView Grid.Row="2" HorizontalAlignment="Center" ItemContainerStyle="{StaticResource WrapGrid}"
+                      ItemsSource="{x:Bind CurrentManga.ChaptersNumbers, Mode=OneWay}"
+                      IsItemClickEnabled="True" ItemClick="GridView_ItemClick"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Border Background="#80000000" Visibility="{x:Bind ShowLoading, Mode=OneWay}">
+            <ProgressRing IsActive="True" Width="75" Height="75" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+    </Grid>
+
+</Page>

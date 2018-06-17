@@ -1,0 +1,2 @@
+MainPackage=Z:\Bureau\Manga.NET\trunk\programme\Manga.NET\Manga.NET\bin\x86\Release\Manga.NET_0.0.1.0_x86.appx
+SymbolPackage=Z:\Bureau\Manga.NET\trunk\programme\Manga.NET\Manga.NET\AppPackages\Manga.NET_0.0.1.0_Test\Manga.NET_0.0.1.0_x86.appxsym

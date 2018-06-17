@@ -1,0 +1,54 @@
+﻿<Page
+    x:Class="MangaNET.Bookmarks"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MangaNET"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <SplitView IsPaneOpen="True" DisplayMode="Inline" OpenPaneLength="250">
+
+        <SplitView.Pane>
+            <ScrollViewer>
+                <StackPanel>
+                    <ListBox ItemsSource="{x:Bind Lib.BookmarksFolders, Mode=OneWay}" x:Name="Folders" Loaded="Page_Loaded" SelectionChanged="Folders_SelectionChanged">
+                        <ListBox.ContextFlyout>
+                            <MenuFlyout Opened="MenuFlyout_Opened">
+                                <MenuFlyoutItem Icon="Delete" Text="Supprimer" Click="DeleteMenuFlyoutItem_Click"/>
+                            </MenuFlyout>
+                        </ListBox.ContextFlyout>
+                    </ListBox>
+                    <Button HorizontalAlignment="Center" Margin="20" Click="AddFolder_Click" AllowFocusOnInteraction="False">
+                        <SymbolIcon Symbol="Add"/>
+                    </Button>
+                </StackPanel>
+            </ScrollViewer>
+        </SplitView.Pane>
+
+        <ScrollViewer>
+            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Style="{StaticResource Titre}" Grid.Row="0" Text="{x:Bind CurrentFolder, Mode=OneWay}"/>
+                <GridView Grid.Row="1" HorizontalAlignment="Center" ItemContainerStyle="{StaticResource WrapGrid}"
+                      ItemsSource="{x:Bind CurrentFolderContent, Converter={StaticResource LId2LMangaConverter}, Mode=OneWay}" ItemClick="GridView_ItemClick">
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <local:MangaThumbnail Title="{Binding Title}" ImageUrl="{Binding ImageUrl}" Id="{Binding Id}">
+                                <local:MangaThumbnail.ContextFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem Icon="Delete" Text="Supprimer" Tag="{Binding Id}" Click="DeleteBookmark_Click"/>
+                                    </MenuFlyout>
+                                </local:MangaThumbnail.ContextFlyout>
+                            </local:MangaThumbnail>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </Grid>
+        </ScrollViewer>
+
+    </SplitView>
+</Page>

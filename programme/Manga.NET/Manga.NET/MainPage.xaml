@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="MangaNET.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MangaNET"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" 
+    Loaded="Page_Loaded">
+
+    <NavigationView ExpandedModeThresholdWidth="1921" IsSettingsVisible="False" x:Name="NavView" AlwaysShowHeader="False"
+                    ItemInvoked="NavigationView_ItemInvoked" 
+                    BackRequested="Nav_BackRequested">
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="Home" Icon="Home" Tag="home" IsEnabled="{x:Bind IsAppDataLoaded, Mode=OneWay}"/>
+            <NavigationViewItem Content="Dernière Sorties" Icon="Clock" Tag="lasts" IsEnabled="{x:Bind IsRecentsLoaded, Mode=OneWay}"/>
+            <NavigationViewItem Content="Recherche" Icon="Find" Tag="listManga" IsEnabled="{x:Bind IsLibraryLoaded, Mode=OneWay}"/>
+            <NavigationViewItem Content="Favoris" Icon="OutlineStar" Tag="bookmarks" IsEnabled="{x:Bind IsAppDataLoaded, Mode=OneWay}"/>
+        </NavigationView.MenuItems>
+        <Frame x:Name="Page" Navigated="Page_Navigated">
+            <Frame.ContentTransitions>
+                <TransitionCollection>
+                    <NavigationThemeTransition/>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
+            <ProgressRing IsActive="True" Width="75" Height="75"/>
+        </Frame>
+    </NavigationView>
+</Page>
+ 

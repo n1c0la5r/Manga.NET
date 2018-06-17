@@ -1,0 +1,23 @@
+﻿<UserControl
+    x:Class="MangaNET.ToReadChap"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MangaNET"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="500"
+    d:DesignWidth="500">
+
+    <Grid VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <local:MangaThumbnail Id="{x:Bind Id, Mode=OneWay}" Title="{x:Bind Title, Mode=OneWay}" ImageUrl="{x:Bind ImageUrl, Mode=OneWay}"/>
+        <TextBlock HorizontalAlignment="Center" Grid.Row="1" Padding="5">
+            <Run Text="Chapitre "/>
+            <Run Text="{x:Bind ChapterNumber, Mode=OneWay}"/>
+        </TextBlock>
+    </Grid>
+</UserControl>
